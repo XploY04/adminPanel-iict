@@ -64,13 +64,13 @@ export function TeamCard({ team, onSelectionChange, showSelectionButton = true }
               <div className="flex items-center gap-2 mb-2">
                 <CardTitle className="text-lg">{team.team_name}</CardTitle>
                 {team.selected && (
-                  <Badge variant="default" className="bg-green-100 text-green-800">
+                  <Badge variant="default" className="bg-green-500 text-white dark:bg-green-600">
                     Selected
                   </Badge>
                 )}
               </div>
-              <p className="text-sm text-gray-600 mb-2">{team.idea_title}</p>
-              <div className="flex items-center gap-4 text-xs text-gray-500">
+              <p className="text-sm text-muted-foreground mb-2">{team.idea_title}</p>
+              <div className="flex items-center gap-4 text-xs text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <User className="w-3 h-3" />
                   {team.team_size} members
@@ -111,7 +111,7 @@ export function TeamCard({ team, onSelectionChange, showSelectionButton = true }
                   href={team.idea_document_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm"
+                  className="inline-flex items-center gap-1 text-primary hover:text-primary/80 text-sm"
                 >
                   <ExternalLink className="w-3 h-3" />
                   View Document
@@ -123,7 +123,7 @@ export function TeamCard({ team, onSelectionChange, showSelectionButton = true }
                 <h4 className="font-medium text-sm mb-3">Team Members</h4>
                 <div className="space-y-3">
                   {team.participants.map((participant, index) => (
-                    <div key={index} className="bg-gray-50 rounded-lg p-3">
+                    <div key={index} className="bg-muted/50 rounded-lg p-3">
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
                         <h5 className="font-medium text-sm">{participant.name}</h5>
                         <Badge variant="outline" className="text-xs w-fit">
@@ -131,10 +131,10 @@ export function TeamCard({ team, onSelectionChange, showSelectionButton = true }
                         </Badge>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-gray-600">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-muted-foreground">
                         <div className="flex items-center gap-1">
                           <Mail className="w-3 h-3" />
-                          <a href={`mailto:${participant.email}`} className="hover:text-blue-600">
+                          <a href={`mailto:${participant.email}`} className="hover:text-primary">
                             {participant.email}
                           </a>
                         </div>
@@ -159,7 +159,7 @@ export function TeamCard({ team, onSelectionChange, showSelectionButton = true }
                             href={participant.github_profile}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-gray-600 hover:text-gray-900"
+                            className="text-muted-foreground hover:text-foreground"
                           >
                             <Github className="w-4 h-4" />
                           </a>
@@ -169,7 +169,7 @@ export function TeamCard({ team, onSelectionChange, showSelectionButton = true }
                             href={participant.linkedin_profile}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-800"
+                            className="text-primary hover:text-primary/80"
                           >
                             <Linkedin className="w-4 h-4" />
                           </a>
@@ -179,7 +179,7 @@ export function TeamCard({ team, onSelectionChange, showSelectionButton = true }
                             href={participant.devfolio_profile}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-purple-600 hover:text-purple-800 text-xs"
+                            className="text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 text-xs"
                           >
                             Devfolio
                           </a>
