@@ -46,6 +46,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [isAuthenticated, loading, pathname, router])
 
+  useEffect(() => {
+    if (!loading && isAuthenticated && (pathname === "/" || pathname === "/login")) {
+      router.push("/admin/teams")
+    }
+  }, [isAuthenticated, loading, pathname, router])
+
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
       const response = await fetch("/api/auth/login", {

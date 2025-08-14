@@ -1,23 +1,57 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { ADMIN_CREDENTIALS, generateToken } from "@/lib/auth"
+import { type NextRequest, NextResponse } from "next/server";
+import { authenticateUser, generateToken } from "@/lib/auth";
+import { z } from "zod";
+
+// Input validation schema
+const LoginSchema = z.object({
+  email: z.string().email("Invalid email format"),
+  password: z.string().min(1, "Password is required"),
+});
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = await request.json()
+    const body = await request.json();
 
-    // Simple credential check (in production, use database)
-    if (email === ADMIN_CREDENTIALS.email && password === ADMIN_CREDENTIALS.password) {
-      const token = generateToken({
-        id: "1",
-        email: ADMIN_CREDENTIALS.email,
-        role: "admin",
-      })
-
-      return NextResponse.json({ token })
+    // Validate input
+    const validation = LoginSchema.safeParse(body);
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: "Invalid input", details: validation.error.errors },
+        { status: 400 }
+      );
     }
 
-    return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
+    const { email, password } = validation.data;
+
+    // Authenticate user from database
+    const user = await authenticateUser(email, password);
+
+    if (user) {
+      const token = generateToken({
+        id: user.id,
+        email: user.email,
+        role: user.role as "admin" | "user",
+      });
+
+      return NextResponse.json({
+        token,
+        user: {
+          id: user.id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          role: user.role,
+        },
+      });
+    }
+
+    // Don't reveal whether email exists or password is wrong
+    return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
   } catch (error) {
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    console.error("Login error:", error);
+    return NextResponse.json(
+      { error: "Authentication failed" },
+      { status: 500 }
+    );
   }
 }

@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useAuth } from "@/components/auth-provider"
-import { Button } from "@/components/ui/button"
-import { LogOut, Users, UserCheck } from "lucide-react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { useAuth } from "@/components/auth-provider";
+import { Button } from "@/components/ui/button";
+import { LogOut, Users, UserCheck, BarChart3 } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function AdminLayout({ children }: { children: React.ReactNode }) {
-  const { logout } = useAuth()
-  const pathname = usePathname()
+  const { logout } = useAuth();
+  const pathname = usePathname();
 
   return (
     <div className="min-h-screen bg-background">
@@ -18,13 +18,15 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-8">
-              <h1 className="text-xl font-bold text-foreground">Hackathon Admin</h1>
+              <h1 className="text-xl font-bold text-foreground">
+                Hackathon Admin
+              </h1>
               <nav className="hidden md:flex space-x-4">
                 <Link
                   href="/admin/teams"
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    pathname === "/admin/teams" 
-                      ? "bg-accent text-accent-foreground" 
+                    pathname === "/admin/teams"
+                      ? "bg-accent text-accent-foreground"
                       : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
                   }`}
                 >
@@ -41,6 +43,17 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                 >
                   <UserCheck className="inline-block w-4 h-4 mr-2" />
                   Selected Teams
+                </Link>
+                <Link
+                  href="/admin/analytics"
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    pathname === "/admin/analytics"
+                      ? "bg-accent text-accent-foreground"
+                      : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+                  }`}
+                >
+                  <BarChart3 className="inline-block w-4 h-4 mr-2" />
+                  Analytics
                 </Link>
               </nav>
             </div>
@@ -60,8 +73,8 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
           <Link
             href="/admin/teams"
             className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-              pathname === "/admin/teams" 
-                ? "bg-accent text-accent-foreground" 
+              pathname === "/admin/teams"
+                ? "bg-accent text-accent-foreground"
                 : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
             }`}
           >
@@ -71,18 +84,31 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
           <Link
             href="/admin/selected-teams"
             className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-              pathname === "/admin/selected-teams" 
-                ? "bg-accent text-accent-foreground" 
+              pathname === "/admin/selected-teams"
+                ? "bg-accent text-accent-foreground"
                 : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
             }`}
           >
             <UserCheck className="inline-block w-4 h-4 mr-2" />
             Selected Teams
           </Link>
+          <Link
+            href="/admin/analytics"
+            className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              pathname === "/admin/analytics"
+                ? "bg-accent text-accent-foreground"
+                : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+            }`}
+          >
+            <BarChart3 className="inline-block w-4 h-4 mr-2" />
+            Analytics
+          </Link>
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{children}</main>
+      <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        {children}
+      </main>
     </div>
-  )
+  );
 }
