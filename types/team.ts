@@ -21,3 +21,19 @@ export interface Team {
   selected: boolean
   createdAt: Date
 }
+
+export interface SubmissionDocumentUrl {
+  ppt?: string
+  repo?: string
+  video?: string
+}
+
+export interface Submission {
+  _id: string
+  team_id: string
+  __v: number
+  createdAt: string
+  submission_document_url: SubmissionDocumentUrl[]
+  updatedAt: string
+  team: Team
+}
