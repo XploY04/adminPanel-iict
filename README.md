@@ -197,10 +197,11 @@ AdminPanel-IICT/
 ```typescript
 {
   team_id: string
+  // Array allows multiple submission versions/revisions
   submission_document_url: {
-    ppt?: string
-    repo?: string
-    video?: string
+    ppt?: string    // Presentation URL
+    repo?: string   // Repository URL
+    video?: string  // Video demo URL
   }[]
   createdAt: string
   updatedAt: string
@@ -287,7 +288,7 @@ To add tests, consider using:
 FROM node:18-alpine
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 COPY . .
 RUN npm run build
 EXPOSE 3000
@@ -354,7 +355,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📞 Support
 
-For support, email your-email@example.com or open an issue in the GitHub repository.
+For support, open an issue in the GitHub repository.
 
 ## 🔮 Future Enhancements
 
